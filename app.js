@@ -11,6 +11,9 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+let db_M = require('./database');
+global.db_pool = db_M.pool;
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
