@@ -14,7 +14,10 @@ app.use(cookieParser());
 let db_M = require('./database');
 global.db_pool = db_M.pool;
 
-app.set("view engine", "ejs");
+const auth_R = require('./routers/auth_R');
+app.use('/', auth_R);
+
+app.set("login.ejs engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 // דף בית זמני
