@@ -1,0 +1,17 @@
+<h2>הקטגוריות שלי</h2>
+
+<form method="POST" action="/categories/add">
+    <input type="text" name="name" placeholder="שם קטגוריה" required>
+    <button type="submit">הוסף</button>
+</form>
+
+<ul>
+    <% categories.forEach(cat => { %>
+        <li>
+            <%= cat.name %>
+            <a href="/categories/delete/<%= cat.id %>">❌</a>
+        </li>
+    <% }) %>
+</ul>
+
+<a href="/tasks">למשימות</a> | <a href="/logout">התנתקות</a>

@@ -21,6 +21,8 @@ const user_Mid = require('./middleware/user_Mid');
 app.get('/protected', user_Mid.isLogged, (req, res) => {
     res.send("את מחוברת כ-" + req.user.username);
 });
+const categories_R = require('./routers/categories_R');
+app.use('/categories', user_Mid.isLogged, categories_R);
 
 app.set("view engine", "ejs");
 
