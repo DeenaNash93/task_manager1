@@ -17,7 +17,13 @@ global.db_pool = db_M.pool;
 const auth_R = require('./routers/auth_R');
 app.use('/', auth_R);
 
-app.set("login.ejs engine", "ejs");
+const user_Mid = require('./middleware/user_Mid');
+app.get('/protected', user_Mid.isLogged, (req, res) => {
+    res.send("את מחוברת כ-" + req.user.username);
+});
+
+app.set("view engine", "ejs");
+
 app.set("views", path.join(__dirname, "views"));
 
 // דף בית זמני
