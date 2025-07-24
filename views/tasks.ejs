@@ -1,0 +1,49 @@
+<h2>המשימות שלי</h2>
+
+<form method="POST" action="/tasks/add">
+    <input type="text" name="description" placeholder="תיאור" maxlength="200" required>
+    <input type="date" name="due_date" required>
+    <select name="category_id">
+        <option value="">ללא קטגוריה</option>
+        <% categories.forEach(cat => { %>
+            <option value="<%= cat.id %>"><%= cat.name %></option>
+        <% }) %>
+    </select>
+    <button type="submit">הוסף משימה</button>
+</form>
+
+<form method="GET" action="/tasks">
+    <label>סינון:</label>
+    <select name="status">
+        <option value="all" <%= filters.status === 'all' ? 'selected' : '' %>>הכל</option>
+        <option value="done" <%= filters.status === 'done' ? 'selected' : '' %>>בוצע</option>
+        <option value="not_done" <%= filters.status === 'not_done' ? 'selected' : '' %>>לא בוצע</option>
+    </select>
+    <select name="category">
+        <option value="all" <%= filters.category === 'all' ? 'selected' : '' %>>כל הקטגוריות</option>
+        <% categories.forEach(cat => { %>
+            <option value="<%= cat.id %>" <%= filters.category == cat.id ? 'selected' : '' %>><%= cat.name %></option>
+        <% }) %>
+    </select>
+    <button type="submit">סנן</button>
+</form>
+
+<ul>
+    <% tasks.forEach(task => { %>
+        <li>
+            <strong><%= task.description %></strong>
+            - <%= task.due_date.toLocaleDateString() %>
+            <% if (task.category_name) { %> [<%= task.category_name %>] <% } %>
+            - <%= task.is_done ? '✔️' : '❌' %>
+            <a href="/tasks/toggle/<%= task.id %>">שנה סטטוס</a>
+        </li>
+    <% }) %>
+</ul>
+
+<div>
+    <a href="/tasks?page=<%= parseInt(filters.page) - 1 %>">⬅</a>
+    עמוד <%= filters.page %>
+    <a href="/tasks?page=<%= parseInt(filters.page) + 1 %>">➡</a>
+</div>
+
+<a href="/categories">לניהול קטגוריות</a> | <a href="/logout">התנתקות</a>

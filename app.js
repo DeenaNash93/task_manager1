@@ -24,6 +24,9 @@ app.get('/protected', user_Mid.isLogged, (req, res) => {
 const categories_R = require('./routers/categories_R');
 app.use('/categories', user_Mid.isLogged, categories_R);
 
+const tasks_R = require('./routers/tasks_R');
+app.use('/tasks', user_Mid.isLogged, tasks_R);
+
 app.set("view engine", "ejs");
 
 app.set("views", path.join(__dirname, "views"));
